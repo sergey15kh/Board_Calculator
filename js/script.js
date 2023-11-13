@@ -1,76 +1,128 @@
-// Предположим, что цена за м³ задана заранее
-const pricePerCubicMeter = 7400; // Пример цены за м³
+// Цены за кубический метр в зависимости от типа и длины материала
+const prices = {
+    'Сырой': {
+        '3000': 7400,
+        '4000': 7400,
+        '4500': 7400,
+        '6000': 7400,
+        '7000': 12800,
+        '8000': 13800
+    },
+    'Сухой': {
+        '3000': 9300,
+        '4000': 9300,
+        '4500': 9300,
+        '6000': 9300,
+        '7000': 15100,
+        '8000': 16100
+    }
+};
 
-document.getElementById('add').addEventListener('click', function() {
+// Цены за антисептическую обработку
+const antisepticPrices = {
+    'none': 0,
+    'BIO': 1000,
+    'OgneBio': 2000
+};
+
+function calculate() {
+    // Получаем значения из полей ввода
     var material = document.getElementById('material').value;
-    var thickness = parseFloat(document.getElementById('thickness').value); // толщина в мм
-    var width = parseFloat(document.getElementById('width').value); // ширина в мм
-    var length = parseFloat(document.getElementById('length').value); // длина в мм
-    var quantity = parseInt(document.getElementById('quantity').value);
-    var antiseptic = document.getElementById('antiseptic').checked ? "Да" : "Нет";
+    var thickness = parseFloat(document.getElementById('thickness').value) / 1000; // Переводим в метры
+    var width = parseFloat(document.getElementById('width').value) / 1000; // Переводим в метры
+    var lengthValue = document.getElementById('length').value; // Получаем выбранную длину
+    var length = parseFloat(lengthValue) / 1000; // Переводим в метры
+    var quantity = parseFloat(document.getElementById('quantity').value) || 0;
+    var volumeMpInput = parseFloat(document.getElementById('volume_mp').value) || 0;
+    var volumeM3Input = parseFloat(document.getElementById('volume_m3').value) || 0;
+    var antisepticType = document.getElementById('antiseptic').value;
 
-    // Расчет размеров для отображения
-    var sizeDisplay = `${thickness}x${width}x${length}`;
+    // Определяем цену в зависимости от типа и длины
+    var pricePerCubicMeter = prices[material][lengthValue];
 
-    // Расчет объема одной доски или бруса в м³
-    var volumePerPiece = (thickness / 1000) * (width / 1000) * (length / 1000);
-    var totalVolume = volumePerPiece * quantity; // Общий объем в м³
+    // Расчетные переменные
+    var totalVolume;
+    var volumeMp;
+    var volumePerPiece;
 
-    // Расчет количества штук на основе введенного объема и размеров
-    var quantityCalc = totalVolume / volumePerPiece;
+    // Расчёт на основе введённого количества штук
+    if (quantity > 0) {
+        volumePerPiece = thickness * width * length;
+        totalVolume = volumePerPiece * quantity;
+        volumeMp = length * quantity;
+    }
+    // Расчёт на основе введённого объема м/п
+    else if (volumeMpInput > 0) {
+        totalVolume = volumeMpInput * thickness * width;
+        quantity = volumeMpInput / length;
+        volumeMp = volumeMpInput;
+    }
+    // Расчёт на основе введённого объема м³
+    else if (volumeM3Input > 0) {
+        totalVolume = volumeM3Input;
+        volumeMp = totalVolume / (thickness * width);
+        quantity = totalVolume / (thickness * width * length);
+    }
 
-    // Расчет объема м/п
-    var volumeMp = totalVolume / (thickness / 1000) / (width / 1000);
+    // Расчет цены за метр погонный и за штуку
+    var pricePerMeter = pricePerCubicMeter * thickness * width;
+    var pricePerPiece = pricePerMeter * length;
 
-    // Расчет цены за метр погонный
-    var pricePerMeter = pricePerCubicMeter * (thickness / 1000) * (width / 1000);
+    // Определяем стоимость антисептика
+    var antisepticPrice = antisepticPrices[antisepticType];
+    var antisepticCost = totalVolume * antisepticPrice;
 
-    // Расчет цены за штуку
-    var pricePerPiece = pricePerMeter * (length / 1000);
+    // Расчет общей стоимости с учетом антисептика
+    var totalPrice = totalVolume * pricePerCubicMeter + antisepticCost;
 
-    // Расчет общей стоимости
-    var totalPrice = totalVolume * pricePerCubicMeter;
+    // Проверяем, был ли сделан хотя бы один расчёт
+    if (!totalVolume) {
+        alert('Введите количество штук, объем м/п или объем м³ для расчёта.');
+        return; // Прерываем функцию, если нечего расчитывать
+    }
 
-    // Добавление строки в таблицу результатов
+    // Создание новой строки в таблице результатов
     var resultsTableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
     var newRow = resultsTableBody.insertRow();
 
-    // Заполнение данных в строку
+    // Форматирование размера для отображения
+    var sizeDisplay = `${(thickness * 1000).toFixed(0)}x${(width * 1000).toFixed(0)}x${lengthValue}`;
+
+    // Заполнение новой строки таблицы данными
     newRow.innerHTML = `
     <td>${material}</td>
     <td>${sizeDisplay}</td>
-    <td>${quantityCalc.toFixed(2)}</td>
+    <td>${quantity.toFixed(2)}</td>
+    <td>${volumeMp.toFixed(3)}</td>
     <td>${totalVolume.toFixed(3)}</td>
-    <td>${volumeMp.toFixed(2)}</td>
-    <td>${pricePerCubicMeter.toFixed(2)}</td>
     <td>${pricePerMeter.toFixed(2)}</td>
     <td>${pricePerPiece.toFixed(2)}</td>
+    <td>${pricePerCubicMeter.toFixed(2)}</td>
     <td>${totalPrice.toFixed(2)}</td>
-    <td>${antiseptic}</td>
-  `;
+    <td>${antisepticType !== 'none' ? antisepticType : 'Нет'}</td>
+    `;
 
     // Добавляем кнопку удаления
     var deleteCell = newRow.insertCell();
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'Удалить';
-    deleteButton.onclick = function() {
-        resultsTableBody.removeChild(newRow);
-    };
+    deleteButton.addEventListener('click', function() {
+        resultsTableBody.deleteRow(newRow.rowIndex - 1);
+    });
     deleteCell.appendChild(deleteButton);
-});
+}
 
+// Обработчики событий для кнопок
+document.getElementById('add').addEventListener('click', calculate);
 document.getElementById('clear').addEventListener('click', function() {
-    var resultsTableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
-    resultsTableBody.innerHTML = "";
-
+    document.getElementById('resultsTable').getElementsByTagName('tbody')[0].innerHTML = "";
+    // Очистка всех полей ввода
     document.getElementById('material').selectedIndex = 0;
     document.getElementById('thickness').selectedIndex = 0;
     document.getElementById('width').selectedIndex = 0;
     document.getElementById('length').selectedIndex = 0;
     document.getElementById('quantity').value = '';
-    document.getElementById('antiseptic').checked = false;
-});
-
-document.getElementById('export').addEventListener('click', function() {
-    // Здесь будет логика экспорта данных в Excel
+    document.getElementById('volume_mp').value = '';
+    document.getElementById('volume_m3').value = '';
+    document.getElementById('antiseptic').value = 'none'; // Изменил на 'value' с 'checked'
 });

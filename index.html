@@ -43,13 +43,23 @@
                 <option>200</option>
             </select></td>
             <td><select id="length">
+                <option>3000</option>
                 <option>4000</option>
                 <option>4500</option>
+                <option>6000</option>
+                <option>7000</option>
+                <option>8000</option>
             </select></td>
             <td><input type="number" id="quantity"></td>
             <td><input type="number" id="volume_mp"></td>
             <td><input type="number" id="volume_m3"></td>
-            <td><input type="checkbox" id="antiseptic"></td>
+            <td>
+                <select id="antiseptic">
+                    <option value="none">Нет</option>
+                    <option value="BIO">БИО</option>
+                    <option value="OgneBio">ОгнеБио</option>
+                </select>
+            </td>
         </tr>
     </table>
     <div class="buttons">
@@ -63,11 +73,11 @@
             <th>Материал</th>
             <th>Размер</th>
             <th>Кол-во шт</th>
-            <th>Объем м3</th>
             <th>Объем м\п</th>
-            <th>Цена м3</th>
+            <th>Объем м3</th>
             <th>Цена мп</th>
             <th>Цена шт</th>
+            <th>Цена м3</th>
             <th>Стоимость</th>
             <th>Антисептик</th>
             <th>Удалить</th>
