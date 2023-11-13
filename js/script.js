@@ -43,7 +43,7 @@ function calculate() {
 
     // Если заполнено более одного поля, показываем предупреждение
     if (inputCount > 1) {
-        alert('Пожалуйста, заполните только одно поле: "Кол-во шт.", "Объем м/п" или "Объем (м³)".');
+        showModal('Пожалуйста, заполните только одно поле: "Кол-во шт.", "Объем м/п" или "Объем (м³)".');
         return; // Прерываем выполнение функции
     }
 
@@ -87,7 +87,7 @@ function calculate() {
 
     // Проверяем, был ли сделан хотя бы один расчёт
     if (!totalVolume) {
-        alert('Введите количество штук, объем м/п или объем м³ для расчёта.');
+        showModal('Введите количество штук, объем м/п или объем м³ для расчёта.');
         return; // Прерываем функцию, если нечего расчитывать
     }
 
@@ -138,26 +138,6 @@ function updateTotals() {
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
-document.getElementById('export').addEventListener('click', function() {
-    // Создаём рабочую книгу
-    var wb = XLSX.utils.book_new();
-
-    // Находим таблицу результатов
-    var exportTable = document.getElementById('resultsTable').cloneNode(true);
-
-    // Удаляем если не нужно экспортировать кнопки удаления
-    Array.from(exportTable.querySelectorAll('button')).forEach(button => button.parentNode.removeChild(button));
-
-    // Используем утилиту SheetJS для преобразования таблицы в лист данных
-    var ws = XLSX.utils.table_to_sheet(exportTable);
-
-    // Добавляем лист данных в рабочую книгу
-    XLSX.utils.book_append_sheet(wb, ws, "Results");
-
-    // Генерируем файл Excel и инициируем его скачивание
-    XLSX.writeFile(wb, "Results.xlsx");
-});
-
 // Обработчики событий для кнопок
 document.getElementById('add').addEventListener('click', calculate);
 document.getElementById('clear').addEventListener('click', function() {
@@ -174,3 +154,57 @@ document.getElementById('clear').addEventListener('click', function() {
 
     updateTotals();
 });
+
+document.getElementById('export').addEventListener('click', function() {
+    var tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+    // Проверяем, есть ли строки в теле таблицы
+    if (tableBody.rows.length === 0) {
+        showModal('Нет данных для экспорта.');
+        return; // Прерываем выполнение, если таблица пуста
+    }
+
+    // Создаём рабочую книгу
+    var wb = XLSX.utils.book_new();
+
+    // Находим таблицу результатов и клонируем её для экспорта
+    var exportTable = document.getElementById('resultsTable').cloneNode(true);
+
+    // Удаляем кнопки удаления, если они есть
+    Array.from(exportTable.querySelectorAll('button')).forEach(button => button.parentNode.removeChild(button));
+
+    // Используем утилиту SheetJS для преобразования таблицы в лист данных
+    var ws = XLSX.utils.table_to_sheet(exportTable);
+
+    // Добавляем лист данных в рабочую книгу
+    XLSX.utils.book_append_sheet(wb, ws, "Results");
+
+    // Генерируем файл Excel и инициируем его скачивание
+    XLSX.writeFile(wb, "Results.xlsx");
+});
+
+
+// Получаем модальное окно
+var modal = document.getElementById("myModal");
+
+// Получаем элемент <span>, который закрывает модальное окно
+var span = document.getElementsByClassName("close")[0];
+
+// Функция для отображения модального окна с текстом сообщения
+function showModal(message) {
+    var modalText = document.getElementById("modalText");
+    modalText.textContent = message; // Установить текст в модальное окно
+    modal.style.display = "block"; // Показать модальное окно
+}
+
+// Когда пользователь кликает на <span> (x), закрыть модальное окно
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Когда пользователь кликает в любом месте за пределами модального окна, закрыть его
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+

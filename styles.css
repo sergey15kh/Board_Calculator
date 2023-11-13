@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
 	font-family: "Arial", sans-serif;
 	background-color: #f9f9f9;
@@ -87,6 +88,54 @@ body {
 
 .calculator .buttons button:hover {
 	background-color: #45a049;
+}
+
+/* Стиль модального окна */
+.modal {
+	display: none;
+	/* Скрыто по умолчанию */
+	position: fixed;
+	/* Остается на месте при прокрутке */
+	z-index: 1;
+	/* Сидит над всем */
+	left: 0;
+	top: 0;
+	width: 100%;
+	/* Полная ширина */
+	height: 100%;
+	/* Полная высота */
+	overflow: auto;
+	/* Включить прокрутку, если нужно */
+	background-color: black;
+	/* Цвет фона */
+	background-color: rgba(0, 0, 0, 0.4);
+	/* Черный с непрозрачностью */
+}
+
+/* Стиль контента модального окна */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	/* 15% сверху и по центру */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	/* Можно задать ширину */
+}
+
+/* Стиль кнопки закрыть (x) */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 /*# sourceMappingURL=styles.css.map */
