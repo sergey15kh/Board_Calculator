@@ -36,6 +36,16 @@ function calculate() {
     var volumeMpInput = parseFloat(document.getElementById('volume_mp').value) || 0;
     var volumeM3Input = parseFloat(document.getElementById('volume_m3').value) || 0;
     var antisepticType = document.getElementById('antiseptic').value;
+    var quantityInput = document.getElementById('quantity').value;
+
+    // Проверяем, сколько полей заполнено
+    var inputCount = [quantityInput, volumeMpInput, volumeM3Input].filter(value => value).length;
+
+    // Если заполнено более одного поля, показываем предупреждение
+    if (inputCount > 1) {
+        alert('Пожалуйста, заполните только одно поле: "Кол-во шт.", "Объем м/п" или "Объем (м³)".');
+        return; // Прерываем выполнение функции
+    }
 
     // Определяем цену в зависимости от типа и длины
     var pricePerCubicMeter = prices[material][lengthValue];
