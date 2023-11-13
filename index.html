@@ -2,9 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Калькулятор доски/бруса</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 
+<div class="calculator">
+    <div class="header">
+        <h1>Калькулятор доски/бруса</h1>
+        <button id="export">Экспорт в Excel</button>
+    </div>
+    <table class="input-table">
+        <tr>
+            <th>Материал</th>
+            <th>Толщина (мм)</th>
+            <th>Ширина (мм)</th>
+            <th>Длина (мм)</th>
+            <th>Кол-во шт.</th>
+            <th>Объем м/п</th>
+            <th>Объем (м³)</th>
+            <th>Антисептик</th>
+        </tr>
+        <tr>
+            <td><select id="material">
+                <option>Сырой</option>
+                <option>Сухой</option>
+            </select></td>
+            <td><select id="thickness">
+                <option>27</option>
+                <option>40</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+                <option>200</option>
+            </select></td>
+            <td><select id="width">
+                <option>100</option>
+                <option>120</option>
+                <option>150</option>
+                <option>200</option>
+            </select></td>
+            <td><select id="length">
+                <option>4000</option>
+                <option>4500</option>
+            </select></td>
+            <td><input type="number" id="quantity"></td>
+            <td><input type="number" id="volume_mp"></td>
+            <td><input type="number" id="volume_m3"></td>
+            <td><input type="checkbox" id="antiseptic"></td>
+        </tr>
+    </table>
+    <div class="buttons">
+        <button id="add">Добавить</button>
+        <button id="clear">Очистить</button>
+    </div>
+    <!-- Таблица для вывода результатов -->
+    <table id="resultsTable">
+        <thead>
+        <tr>
+            <th>Материал</th>
+            <th>Размер</th>
+            <th>Кол-во шт</th>
+            <th>Объем м3</th>
+            <th>Объем м\п</th>
+            <th>Цена м3</th>
+            <th>Цена мп</th>
+            <th>Цена шт</th>
+            <th>Стоимость</th>
+            <th>Антисептик</th>
+            <th>Удалить</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Сюда будут добавляться строки с результатами -->
+        </tbody>
+    </table>
+</div>
+
+<script src="./js/global.js"></script>
 </body>
 </html>

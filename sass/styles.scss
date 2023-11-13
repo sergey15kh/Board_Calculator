@@ -1,0 +1,99 @@
+$primary-color: #4CAF50;
+$hover-color: #45a049;
+$text-color: #333;
+$background-color: #f9f9f9;
+$border-color: #ddd;
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: $background-color;
+  margin: 0;
+  padding: 20px;
+}
+
+.calculator {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  box-shadow: 0 2px 4px $box-shadow-color;
+  border-radius: 8px;
+  padding: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 24px;
+      color: $text-color;
+    }
+
+    button#export {
+      padding: 10px 20px;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid $border-color;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    th {
+      background-color: $primary-color;
+      color: white;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0;
+      display: block;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    button {
+      padding: 10px 20px;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+    }
+  }
+}
+
+// Респонсивность и дополнительные стили могут быть добавлены здесь
