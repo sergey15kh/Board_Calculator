@@ -1,141 +1,173 @@
-@charset "UTF-8";
 body {
-	font-family: "Arial", sans-serif;
-	background-color: #f9f9f9;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #F8F4F9;
+	color: #2A2A2A;
 	margin: 0;
 	padding: 20px;
 }
 
 .calculator {
-	max-width: 1000px;
-	margin: auto;
-	background: white;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
+	background: #fff;
+	border-radius: 6px;
+	box-shadow: 0 2px 10px rgba(42, 42, 42, 0.1);
 	padding: 20px;
+	margin: 20px auto;
+	width: 90%;
+	max-width: 960px;
 }
 
 .calculator .header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .calculator .header h1 {
-	font-size: 24px;
-	color: #333;
+	color: #355C7D;
+	margin: 0;
 }
 
-.calculator .header button#export {
-	padding: 10px 20px;
-	background-color: #4CAF50;
-	color: white;
+.calculator .header #export {
+	background: #F67280;
+	color: #fff;
 	border: none;
-	border-radius: 4px;
+	border-radius: 6px;
+	padding: 10px 20px;
 	cursor: pointer;
-	transition: background-color 0.3s;
+	transition: all 0.3s ease;
 }
 
-.calculator .header button#export:hover {
-	background-color: #45a049;
+.calculator .header #export:hover {
+	background: #f34255;
 }
 
 .calculator table {
 	width: 100%;
 	border-collapse: collapse;
+	margin-top: 18px;
 }
 
 .calculator table th, .calculator table td {
+	padding: 10px;
 	text-align: left;
-	padding: 8px;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #6C5B7B;
 }
 
 .calculator table th:last-child, .calculator table td:last-child {
-	border-right: none;
+	border-bottom: none;
 }
 
 .calculator table th {
-	background-color: #4CAF50;
-	color: white;
+	background-color: #355C7D;
+	color: #fff;
+	transition: background 0.3s;
+}
+
+.calculator table th:hover {
+	background-color: #264259;
+}
+
+.calculator table tr:nth-child(even) {
+	background-color: #F8F4F9;
 }
 
 .calculator table input, .calculator table select {
 	width: 100%;
 	padding: 8px;
-	margin: 4px 0;
-	display: block;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+	margin-top: 5px;
+	border: 1px solid #6C5B7B;
+	border-radius: 6px;
+	transition: all 0.3s ease;
+}
+
+.calculator table input:focus, .calculator table select:focus {
+	outline: none;
+	border-color: #F67280;
+	box-shadow: 0 0 0 2px rgba(246, 114, 128, 0.2);
 }
 
 .calculator .buttons {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	margin-top: 20px;
 }
 
 .calculator .buttons button {
-	padding: 10px 20px;
-	background-color: #4CAF50;
-	color: white;
+	background: #6C5B7B;
+	color: #fff;
 	border: none;
-	border-radius: 4px;
+	border-radius: 6px;
+	padding: 10px 20px;
+	margin-left: 10px;
 	cursor: pointer;
-	transition: background-color 0.3s;
+	transition: all 0.3s ease;
 }
 
 .calculator .buttons button:hover {
-	background-color: #45a049;
+	background: #52455e;
 }
 
-/* Стиль модального окна */
+.calculator .buttons button:first-child {
+	background: #C06C84;
+}
+
+.calculator .buttons button:first-child:hover {
+	background: #ae4b67;
+}
+
 .modal {
 	display: none;
-	/* Скрыто по умолчанию */
 	position: fixed;
-	/* Остается на месте при прокрутке */
-	z-index: 1;
-	/* Сидит над всем */
+	z-index: 2;
 	left: 0;
 	top: 0;
 	width: 100%;
-	/* Полная ширина */
 	height: 100%;
-	/* Полная высота */
 	overflow: auto;
-	/* Включить прокрутку, если нужно */
-	background-color: black;
-	/* Цвет фона */
-	background-color: rgba(0, 0, 0, 0.4);
-	/* Черный с непрозрачностью */
+	background-color: rgba(42, 42, 42, 0.5);
+	padding-top: 100px;
 }
 
-/* Стиль контента модального окна */
 .modal-content {
-	background-color: #fefefe;
-	margin: 15% auto;
-	/* 15% сверху и по центру */
+	background-color: #F8F4F9;
+	margin: auto;
 	padding: 20px;
-	border: 1px solid #888;
+	border: 1px solid #2A2A2A;
 	width: 80%;
-	/* Можно задать ширину */
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(42, 42, 42, 0.2);
 }
 
-/* Стиль кнопки закрыть (x) */
 .close {
-	color: #aaa;
+	color: #F67280;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
+	margin-left: 50px;
 }
 
-.close:hover,
-.close:focus {
-	color: black;
+.close:hover, .close:focus {
+	color: #f0122a;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+@media (max-width: 768px) {
+	.header {
+		flex-direction: column;
+	}
+	.header #export {
+		width: 100%;
+		margin-top: 10px;
+	}
+	.buttons {
+		flex-direction: column;
+	}
+	.buttons button {
+		width: 100%;
+		margin-top: 10px;
+	}
 }
 
 /*# sourceMappingURL=styles.css.map */
