@@ -110,6 +110,22 @@ function calculate() {
         resultsTableBody.deleteRow(newRow.rowIndex - 1);
     });
     deleteCell.appendChild(deleteButton);
+
+    updateTotals();
+}
+
+function updateTotals() {
+    var totalVolume = 0;
+    var totalCost = 0;
+    var rows = document.getElementById('resultsTable').getElementsByTagName('tbody')[0].rows;
+
+    for (var i = 0; i < rows.length; i++) {
+        totalVolume += parseFloat(rows[i].cells[4].textContent) || 0;
+        totalCost += parseFloat(rows[i].cells[8].textContent) || 0;
+    }
+
+    document.getElementById('totalVolume').textContent = totalVolume.toFixed(3);
+    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
 // Обработчики событий для кнопок
@@ -125,4 +141,6 @@ document.getElementById('clear').addEventListener('click', function() {
     document.getElementById('volume_mp').value = '';
     document.getElementById('volume_m3').value = '';
     document.getElementById('antiseptic').value = 'none'; // Изменил на 'value' с 'checked'
+
+    updateTotals();
 });
