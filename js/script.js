@@ -138,6 +138,26 @@ function updateTotals() {
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
 }
 
+document.getElementById('export').addEventListener('click', function() {
+    // Создаём рабочую книгу
+    var wb = XLSX.utils.book_new();
+
+    // Находим таблицу результатов
+    var exportTable = document.getElementById('resultsTable').cloneNode(true);
+
+    // Удаляем если не нужно экспортировать кнопки удаления
+    Array.from(exportTable.querySelectorAll('button')).forEach(button => button.parentNode.removeChild(button));
+
+    // Используем утилиту SheetJS для преобразования таблицы в лист данных
+    var ws = XLSX.utils.table_to_sheet(exportTable);
+
+    // Добавляем лист данных в рабочую книгу
+    XLSX.utils.book_append_sheet(wb, ws, "Results");
+
+    // Генерируем файл Excel и инициируем его скачивание
+    XLSX.writeFile(wb, "Results.xlsx");
+});
+
 // Обработчики событий для кнопок
 document.getElementById('add').addEventListener('click', calculate);
 document.getElementById('clear').addEventListener('click', function() {
