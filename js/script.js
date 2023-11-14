@@ -192,15 +192,13 @@ function addSelectedBars() {
     // Перебираем строки таблицы в модальном окне
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
-        var isSelected = row.cells[0].querySelector('input[type="checkbox"]').checked;
-        var materialName = row.cells[1].textContent; // Значение "Наименование"
-        var quantity = row.cells[5].querySelector('input[type="number"]').value;
-        var pricePerMeter = parseFloat(row.cells[4].textContent);
+        var materialName = row.cells[1].textContent; // "Наименование"
+        var quantity = row.cells[4].querySelector('input[type="number"]').value;
+        var pricePerMeter = parseFloat(row.cells[3].textContent);
         var cost = pricePerMeter * quantity;
 
         // Если чекбокс выбран и количество введено
-        if (isSelected && quantity) {
-            // Создаем строку для основной таблицы
+        if (quantity) {
             var newRow = document.getElementById('resultsTable').tBodies[0].insertRow();
             newRow.innerHTML = `
                 <td>${materialName}</td>
@@ -240,6 +238,25 @@ var addBarsButtons = document.getElementById('barsModal').querySelectorAll('.add
 addBarsButtons.forEach(function(button) {
     button.addEventListener('click', function() {
         addSelectedBars();
+    });
+});
+
+// Функция для изменения текста кнопки на иконку и обратно
+function toggleButtonLoading(button) {
+    const originalText = button.innerHTML; // Сохраняем исходный текст кнопки
+    button.innerHTML = '<i class="fa fa-check"></i>'; // Заменяем текст на иконку (пример использует Font Awesome)
+
+    // Возвращаем исходный текст кнопки через 2 секунды
+    setTimeout(() => {
+        button.innerHTML = originalText;
+    }, 2000);
+}
+
+// Назначаем обработчик событий на кнопку
+document.querySelectorAll('.addBars').forEach(button => {
+    button.addEventListener('click', function() {
+        addSelectedBars(); // Вызываем основную функцию добавления
+        toggleButtonLoading(this); // Изменяем текст кнопки на иконку загрузки
     });
 });
 
