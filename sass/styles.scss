@@ -1,136 +1,83 @@
-// Основная цветовая палитра
-$color-primary: #355C7D; // Темно-синий
-$color-secondary: #6C5B7B; // Сиреневый
-$color-tertiary: #C06C84; // Бледно-розовый
-$color-light: #F8F4F9; // Светлый фон
-$color-dark: #2A2A2A; // Почти черный
-$color-accent: #F67280; // Ярко-розовый акцент
+// Aesthetic Minimalism Color Scheme
+$background-color: #f0f0f0; // Soft background color for minimalism
+$text-color: #333; // Dark gray text for readability and simplicity
+$hover-background-color: #e8e8e8; // Slightly darker background on hover for subtle interactivity
+$error-color: #d9534f; // Muted red for error messages
+$border-color: #ddd; // Light gray for borders
+$transition-duration: 0.3s; // Smooth transitions for interactive elements
 
-// Шрифты и радиусы
-$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$border-radius: 6px;
-
-// Общие стили
+// Basic styles for the document body
 body {
-  font-family: $font-stack;
-  background-color: $color-light;
-  color: $color-dark;
-  margin: 0;
-  padding: 20px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: $background-color;
+  color: $text-color;
+  line-height: 1.6;
 }
 
-// Стилизация калькулятора
+// Minimalistic container styling
 .calculator {
-  background: #fff;
-  border-radius: $border-radius;
-  box-shadow: 0 2px 10px rgba($color-dark, 0.1);
-  padding: 20px;
-  margin: 20px auto;
-  width: 90%;
-  max-width: 960px;
+  padding: 2rem;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  width: auto;
+  max-width: 1200px; // Maximum width for the modal to ensure it's not too wide
+  margin: 0 auto;
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+// Styles for minimalistic containers
+.minimalism-container {
+  background-color: $background-color;
+  border-radius: 4px; // Less pronounced border radius for subtle aesthetics
+  padding: 1rem;
+  border: 1px solid $border-color;
+  margin: 0 auto;
+  max-width: 1000px; // Smaller max-width for a more focused content area
+  position: relative;
+  transition: background-color $transition-duration;
 
-    h1 {
-      color: $color-primary;
-      margin: 0;
-    }
-
-    #export {
-      background: $color-accent;
-      color: #fff;
-      border: none;
-      border-radius: $border-radius;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: darken($color-accent, 10%);
-      }
-    }
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 18px;
-
-    th, td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid $color-secondary;
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-
-    th {
-      background-color: $color-primary;
-      color: #fff;
-      transition: background 0.3s;
-
-      &:hover {
-        background-color: darken($color-primary, 10%);
-      }
-    }
-
-    tr:nth-child(even) {
-      background-color: $color-light;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid $color-secondary;
-      border-radius: $border-radius;
-      transition: all 0.3s ease;
-
-      &:focus {
-        outline: none;
-        border-color: $color-accent;
-        box-shadow: 0 0 0 2px rgba($color-accent, 0.2);
-      }
-    }
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-
-    button {
-      background: $color-secondary;
-      color: #fff;
-      border: none;
-      border-radius: $border-radius;
-      padding: 10px 20px;
-      margin-left: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: darken($color-secondary, 10%);
-      }
-
-      &:first-child {
-        background: $color-tertiary;
-
-        &:hover {
-          background: darken($color-tertiary, 10%);
-        }
-      }
-    }
+  &:hover {
+    background-color: $hover-background-color;
   }
 }
 
-// Модальное окно
+// Minimalistic table styling
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 0.75rem;
+    background-color: $background-color;
+    border-bottom: 1px solid $border-color;
+  }
+
+  th {
+    background-color: $hover-background-color;
+  }
+}
+
+// Minimalistic button styling
+button {
+  padding: 0.5rem 1rem;
+  background-color: $background-color;
+  color: $text-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all $transition-duration;
+
+  &:hover {
+    background-color: $hover-background-color;
+  }
+
+  &:active {
+    transform: translateY(1px); // Less pronounced active state for subtlety
+  }
+}
+
+// Minimalistic modal styling
 .modal {
   display: none;
   position: fixed;
@@ -139,165 +86,86 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba($color-dark, 0.5);
-  padding-top: 100px;
-}
+  background-color: rgba($text-color, 0.4);
+  padding-top: 50px;
 
-.modal-content {
-  background-color: $color-light;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid $color-dark;
-  width: 80%;
-  border-radius: $border-radius;
-  box-shadow: 0 4px 8px rgba($color-dark, 0.2);
-}
-
-.close {
-  color: $color-accent;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  margin-left: 50px;
-
-  &:hover,
-  &:focus {
-    color: darken($color-accent, 20%);
-    text-decoration: none;
-    cursor: pointer;
+  &.show {
+    display: block;
+    animation: fadeIn $transition-duration;
   }
-}
-
-// Адаптивность
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-
-    #export {
-      width: 100%;
-      margin-top: 10px;
-    }
-  }
-
-  .buttons {
-    flex-direction: column;
-
-    button {
-      width: 100%;
-      margin-top: 10px;
-    }
-  }
-}
-
-
-//////
-
-#barsModal {
-  // Здесь вы можете добавить стили для позиционирования или отображения модального окна
-  // Например, для центрирования и добавления фона:
-  display: none; // Изначально скрыто
-  position: fixed; // Фиксированное позиционирование
-  left: 0;
-  top: 0;
-  width: 100%; // Ширина во весь экран
-  height: 100%; // Высота во весь экран
-  //background-color: rgba(0, 0, 0, 0.5); // Полупрозрачный фон
-  z-index: 10; // Убедитесь, что модальное окно будет над другими элементами
 
   .modal-content {
-    cursor: grab;
-    background: #fff;
-    margin: 10% auto; // Центрирование модального блока
-    padding: 20px;
-    border-radius: 5px;
-    width: 50%; // Процент ширины модального окна от ширины экрана
+    background-color: $background-color;
+    width: 50%;
+    margin: 5% auto;
+    border: 1px solid $border-color;
+  }
 
-    .close {
-      color: #aaa;
-      float: right; // Расположение кнопки закрыть справа
-      font-size: 28px;
-      font-weight: bold;
+  .close {
+    color: $text-color;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
 
-      &:hover,
-      &:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-    }
-
-    table {
-      cursor: auto;
-      width: 100%; // Ширина таблицы во весь доступный блок
-      border-collapse: collapse; // Убираем двойные границы
-
-      thead {
-        background-color: #f4f4f4; // Цвет фона для шапки таблицы
-
-        th {
-          padding: 10px;
-          border-bottom: 1px solid #ddd; // Граница для ячеек шапки
-        }
-      }
-
-      tbody {
-        tr {
-          &:nth-child(odd) {
-            background-color: #f9f9f9; // Цвет фона для нечетных строк таблицы
-          }
-
-          &:hover {
-            background-color: #f1f1f1; // Цвет фона при наведении на строку
-          }
-
-          td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd; // Граница для ячеек тела таблицы
-          }
-
-          input[type="number"] {
-            // Стили для полей ввода
-            margin-top: 5px;
-            padding: 5px;
-          }
-
-          input[type="checkbox"] {
-            // Стили для чекбоксов
-            margin-left: 5px;
-          }
-        }
-      }
-
-      tfoot {
-        tr {
-          td {
-            padding: 10px;
-            background-color: #f4f4f4; // Цвет фона для нижнего колонтитула таблицы
-            text-align: right; // Выравнивание текста в право
-          }
-        }
-      }
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center; // Выравниваем кнопки по правому краю
-
-      button {
-        padding: 10px 20px;
-        margin-top: 10px;
-        border: none;
-        border-radius: 3px;
-        background-color: #5cb85c; // Зеленый цвет фона для кнопок
-        color: white; // Белый цвет текста для кнопок
-        cursor: pointer;
-
-        &:hover {
-          background-color: #4cae4c; // Темно-зеленый цвет фона при наведении
-        }
-      }
+    &:hover {
+      color: $error-color;
+      text-decoration: none; // Removing underline on hover for cleaner look
+      cursor: pointer;
     }
   }
 }
 
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Styles for error messages in a minimalistic approach
+#errorModal {
+  .modal-content {
+    border-color: $error-color;
+  }
+}
+
+// Minimalistic styles for the barsModal container
+#barsModal {
+  display: none; // Container is hidden by default
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+  width: 60%;
+  .modal-content {
+    z-index: 9999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Minimalistic select styling
+//select {
+//  padding: 0.5rem;
+//  border: 1px solid $border-color;
+//  border-radius: 4px;
+//  background-color: $background-color;
+//  color: $text-color;
+//  -webkit-appearance: none; // Removes default styling provided by the browser
+//  -moz-appearance: none; // Removes default styling provided by the browser
+//  appearance: none; // Removes default styling provided by the browser
+//  cursor: pointer;
+//  transition: border-color $transition-duration;
+//
+//  &:hover {
+//    border-color: darken($border-color, 10%);
+//  }
+//
+//  &:focus {
+//    outline: none;
+//    border-color: $hover-background-color;
+//  }
+//}
+
+// Utility classes for spacing
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
