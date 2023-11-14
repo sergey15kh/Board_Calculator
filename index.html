@@ -64,6 +64,7 @@
     </table>
     <div class="buttons">
         <button id="add">Добавить</button>
+        <button id="bars">Добавить рейку</button>
         <button id="clear">Очистить</button>
     </div>
     <!-- Таблица для вывода результатов -->
@@ -99,7 +100,7 @@
 </div>
 
 <!-- Модальное окно -->
-<div id="myModal" class="modal">
+<div id="errorModal" class="modal">
     <!-- Контент модального окна -->
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -107,6 +108,51 @@
     </div>
 </div>
 
+<!-- Модальное окно -->
+<div id="barsModal" class="">
+    <!-- Контент модального окна -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <table>
+            <thead>
+            <tr>
+                <th>Выбрыть</th>
+                <th>Наименование</th>
+                <th>Сечение, мм</th>
+                <th>Единица изм</th>
+                <th>Цена мп</th>
+                <th>Введите нужно кол-во</th>
+                <th>Добавить в таблицу</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Сухой</td>
+                <td>10x30</td>
+                <td>м/п</td>
+                <td>9,40</td>
+                <td><input type="number"></td>
+                <td><div class="buttons"><button class="addBars">Добавить</button></div></td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>Сухой строганый</td>
+                <td>10x30</td>
+                <td>м/п</td>
+                <td>9,40</td>
+                <td><input type="number"></td>
+                <td><div class="buttons"><button class="addBars">Добавить</button></div></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="7">Длина рейки 2000 - 4500мм</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
 
 <script src="./js/xlsx.full.min.js"></script>
 <script src="./js/global.js"></script>

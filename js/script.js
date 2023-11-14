@@ -139,14 +139,18 @@ function updateTotals() {
 }
 
 // Обработчики событий для кнопок
-document.getElementById('add').addEventListener('click', function() {
-    calculate();
-    updateTotals();
-});
 
-document.getElementById('clear').addEventListener('click', function() {
-    document.getElementById('resultsTable').getElementsByTagName('tbody')[0].innerHTML = "";
-    updateTotals();
+document.addEventListener('DOMContentLoaded', function() {
+    // Ваш код для установки обработчиков событий
+    document.getElementById('add').addEventListener('click', function() {
+        calculate();
+        updateTotals();
+    });
+
+    document.getElementById('clear').addEventListener('click', function() {
+        document.getElementById('resultsTable').getElementsByTagName('tbody')[0].innerHTML = "";
+        updateTotals();
+    });
 });
 
 document.getElementById('resultsTable').addEventListener('click', function(event) {
@@ -174,9 +178,141 @@ document.getElementById('resultsTable').addEventListener('click', function(event
             totalCostElement.textContent = totalCost.toFixed(2);
         }
     }
-}); 
+});
 
 
+/* Functions добавление реека в таблицу
+--------------------------------------------- */
+// Функция добавления выбранных данных в основную таблицу
+function addSelectedBars() {
+    // Находим таблицу в модальном окне
+    var barsTable = document.getElementById('barsModal').querySelector('table');
+    var rows = barsTable.tBodies[0].rows;
+
+    // Перебираем строки таблицы в модальном окне
+    for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var isSelected = row.cells[0].querySelector('input[type="checkbox"]').checked;
+        var materialName = row.cells[1].textContent; // Значение "Наименование"
+        var quantity = row.cells[5].querySelector('input[type="number"]').value;
+        var pricePerMeter = parseFloat(row.cells[4].textContent);
+        var cost = pricePerMeter * quantity;
+
+        // Если чекбокс выбран и количество введено
+        if (isSelected && quantity) {
+            // Создаем строку для основной таблицы
+            var newRow = document.getElementById('resultsTable').tBodies[0].insertRow();
+            newRow.innerHTML = `
+                <td>${materialName}</td>
+                <td>${row.cells[2].textContent}</td>
+                <td></td>
+                <td>${quantity}</td>
+                <td></td>
+                <td>${pricePerMeter.toFixed(2)}</td>
+                <td></td>
+                <td></td>
+                <td>${cost.toFixed(2)}</td>
+                <td></td>
+            `;
+
+            // Добавляем ячейку с кнопкой удаления
+            var deleteCell = newRow.insertCell();
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Удалить';
+            deleteButton.addEventListener('click', function() {
+                this.closest('tr').remove();
+                updateTotals(); // Обновляем итоговые значения после удаления строки
+            });
+            deleteCell.appendChild(deleteButton);
+        }
+    }
+
+    // Очищаем выбор чекбоксов и поля после добавления строк
+    document.querySelectorAll('#barsModal input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
+    document.querySelectorAll('#barsModal input[type="number"]').forEach(input => input.value = '');
+
+    // Обновляем итоговые значения после добавления строки
+    updateTotals();
+}
+
+// Добавляем обработчик клика на кнопку "Добавить" в модальном окне
+var addBarsButtons = document.getElementById('barsModal').querySelectorAll('.addBars');
+addBarsButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        addSelectedBars();
+    });
+});
+
+// Объявление функции updateTotals() здесь или в другом месте скрипта...
+
+// Drag and Drops
+// Drag and Drop для .modal-content
+var modalContent = document.querySelector("#barsModal .modal-content"); // Элемент для перетаскивания
+
+// Инициализация переменных для координат
+var active = false;
+var currentX;
+var currentY;
+var initialX;
+var initialY;
+var xOffset = 0;
+var yOffset = 0;
+
+// Обработчик события нажатия кнопки мыши
+modalContent.onmousedown = dragStart;
+
+// Обработчики событий мыши
+document.addEventListener("mouseup", dragEnd, false);
+document.addEventListener("mousemove", drag, false);
+
+// Функция для начала перетаскивания
+function dragStart(e) {
+    initialX = e.clientX - xOffset;
+    initialY = e.clientY - yOffset;
+
+    if (e.target === modalContent) {
+        active = true; // Активируем перетаскивание
+    }
+}
+
+// Функция для окончания перетаскивания
+function dragEnd(e) {
+    initialX = currentX;
+    initialY = currentY;
+    active = false; // Деактивируем перетаскивание
+}
+
+// Функция для перетаскивания
+function drag(e) {
+    if (active) {
+        e.preventDefault();
+
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+
+        xOffset = currentX;
+        yOffset = currentY;
+
+        // Установка новой позиции элемента
+        setTranslate(currentX, currentY, modalContent);
+    }
+}
+
+// Установка позиции элемента
+function setTranslate(xPos, yPos, el) {
+    el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+}
+
+// Закрытие модального окна только при нажатии на крестик
+var closeModalButton = document.querySelector(".close"); // Предполагаем, что у вас есть элемент с классом close
+closeModalButton.onclick = function() {
+    modalContent.parentNode.style.display = "none";
+};
+
+
+
+/* Functions Export Exel
+--------------------------------------------- */
 document.getElementById('export').addEventListener('click', function() {
     var tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
     // Проверяем, есть ли строки в теле таблицы
@@ -205,8 +341,9 @@ document.getElementById('export').addEventListener('click', function() {
 });
 
 
-// Получаем модальное окно
-var modal = document.getElementById("myModal");
+/* POPUP с ошибками
+--------------------------------------------- */
+var modal = document.getElementById("errorModal");
 
 // Получаем элемент <span>, который закрывает модальное окно
 var span = document.getElementsByClassName("close")[0];
@@ -229,4 +366,31 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+/* POPUP с выбором реек
+--------------------------------------------- */
+var barsModal = document.getElementById('barsModal');
+
+// Получаем кнопку, которая открывает модальное окно
+var barsBtn = document.getElementById('bars');
+
+// Получаем элемент <span> (x), который закрывает модальное окно
+var span = barsModal.getElementsByClassName('close')[0];
+
+// Когда пользователь кликает на кнопку, открыть модальное окно
+barsBtn.onclick = function() {
+    barsModal.style.display = "block";
+}
+
+// Когда пользователь кликает на <span> (x), закрыть модальное окно
+span.onclick = function() {
+    barsModal.style.display = "none";
+}
+
+// Когда пользователь кликает в любом месте за пределами модального окна, закрыть его
+// window.onclick = function(event) {
+//     if (event.target == barsModal) {
+//         barsModal.style.display = "none";
+//     }
+// }
 

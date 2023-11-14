@@ -189,3 +189,115 @@ body {
     }
   }
 }
+
+
+//////
+
+#barsModal {
+  // Здесь вы можете добавить стили для позиционирования или отображения модального окна
+  // Например, для центрирования и добавления фона:
+  display: none; // Изначально скрыто
+  position: fixed; // Фиксированное позиционирование
+  left: 0;
+  top: 0;
+  width: 100%; // Ширина во весь экран
+  height: 100%; // Высота во весь экран
+  //background-color: rgba(0, 0, 0, 0.5); // Полупрозрачный фон
+  z-index: 10; // Убедитесь, что модальное окно будет над другими элементами
+
+  .modal-content {
+    cursor: grab;
+    background: #fff;
+    margin: 10% auto; // Центрирование модального блока
+    padding: 20px;
+    border-radius: 5px;
+    width: 50%; // Процент ширины модального окна от ширины экрана
+
+    .close {
+      color: #aaa;
+      float: right; // Расположение кнопки закрыть справа
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    table {
+      cursor: auto;
+      width: 100%; // Ширина таблицы во весь доступный блок
+      border-collapse: collapse; // Убираем двойные границы
+
+      thead {
+        background-color: #f4f4f4; // Цвет фона для шапки таблицы
+
+        th {
+          padding: 10px;
+          border-bottom: 1px solid #ddd; // Граница для ячеек шапки
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(odd) {
+            background-color: #f9f9f9; // Цвет фона для нечетных строк таблицы
+          }
+
+          &:hover {
+            background-color: #f1f1f1; // Цвет фона при наведении на строку
+          }
+
+          td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd; // Граница для ячеек тела таблицы
+          }
+
+          input[type="number"] {
+            // Стили для полей ввода
+            margin-top: 5px;
+            padding: 5px;
+          }
+
+          input[type="checkbox"] {
+            // Стили для чекбоксов
+            margin-left: 5px;
+          }
+        }
+      }
+
+      tfoot {
+        tr {
+          td {
+            padding: 10px;
+            background-color: #f4f4f4; // Цвет фона для нижнего колонтитула таблицы
+            text-align: right; // Выравнивание текста в право
+          }
+        }
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center; // Выравниваем кнопки по правому краю
+
+      button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: #5cb85c; // Зеленый цвет фона для кнопок
+        color: white; // Белый цвет текста для кнопок
+        cursor: pointer;
+
+        &:hover {
+          background-color: #4cae4c; // Темно-зеленый цвет фона при наведении
+        }
+      }
+    }
+  }
+}
+
