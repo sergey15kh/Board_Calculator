@@ -139,21 +139,43 @@ function updateTotals() {
 }
 
 // Обработчики событий для кнопок
-document.getElementById('add').addEventListener('click', calculate);
-document.getElementById('clear').addEventListener('click', function() {
-    document.getElementById('resultsTable').getElementsByTagName('tbody')[0].innerHTML = "";
-    // Очистка всех полей ввода
-    document.getElementById('material').selectedIndex = 0;
-    document.getElementById('thickness').selectedIndex = 0;
-    document.getElementById('width').selectedIndex = 0;
-    document.getElementById('length').selectedIndex = 0;
-    document.getElementById('quantity').value = '';
-    document.getElementById('volume_mp').value = '';
-    document.getElementById('volume_m3').value = '';
-    document.getElementById('antiseptic').value = 'none'; // Изменил на 'value' с 'checked'
-
+document.getElementById('add').addEventListener('click', function() {
+    calculate();
     updateTotals();
 });
+
+document.getElementById('clear').addEventListener('click', function() {
+    document.getElementById('resultsTable').getElementsByTagName('tbody')[0].innerHTML = "";
+    updateTotals();
+});
+
+document.getElementById('resultsTable').addEventListener('click', function(event) {
+    if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Удалить') {
+        // Находим родительскую строку кнопки "Удалить"
+        var row = event.target.closest('tr');
+
+        // Выполняем проверку, чтобы убедиться, что строка найдена
+        if (row) {
+            // Получаем значения, которые нужно вычесть из итогов
+            var volumeToRemove = parseFloat(row.cells[4].textContent);
+            var costToRemove = parseFloat(row.cells[8].textContent);
+
+            // Удаляем строку
+            row.remove(); // метод .remove() удаляет элемент напрямую, не требуя ссылки на родителя
+
+            // Обновляем итоговые значения
+            var totalVolumeElement = document.getElementById('totalVolume');
+            var totalCostElement = document.getElementById('totalCost');
+
+            var totalVolume = parseFloat(totalVolumeElement.textContent) - volumeToRemove;
+            var totalCost = parseFloat(totalCostElement.textContent) - costToRemove;
+
+            totalVolumeElement.textContent = totalVolume.toFixed(3);
+            totalCostElement.textContent = totalCost.toFixed(2);
+        }
+    }
+}); 
+
 
 document.getElementById('export').addEventListener('click', function() {
     var tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
