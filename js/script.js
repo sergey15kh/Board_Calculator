@@ -153,6 +153,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Функция для удаления строки из таблицы результатов и обновления итогов
+function deleteRowAndUpdateTotals(row) {
+    var volumeToRemove = parseFloat(row.cells[4].textContent) || 0;
+    var costToRemove = parseFloat(row.cells[8].textContent) || 0;
+
+    // Удаляем строку
+    row.remove();
+
+    // Обновляем итоговые значения
+    var totalVolumeElement = document.getElementById('totalVolume');
+    var totalCostElement = document.getElementById('totalCost');
+
+    var totalVolume = parseFloat(totalVolumeElement.textContent) - volumeToRemove;
+    var totalCost = parseFloat(totalCostElement.textContent) - costToRemove;
+
+    totalVolumeElement.textContent = totalVolume.toFixed(3);
+    totalCostElement.textContent = totalCost.toFixed(2);
+}
+
+// Обработчик события для кнопки "Удалить" в таблице результатов
 document.getElementById('resultsTable').addEventListener('click', function(event) {
     if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Удалить') {
         // Находим родительскую строку кнопки "Удалить"
@@ -160,22 +180,7 @@ document.getElementById('resultsTable').addEventListener('click', function(event
 
         // Выполняем проверку, чтобы убедиться, что строка найдена
         if (row) {
-            // Получаем значения, которые нужно вычесть из итогов
-            var volumeToRemove = parseFloat(row.cells[4].textContent);
-            var costToRemove = parseFloat(row.cells[8].textContent);
-
-            // Удаляем строку
-            row.remove(); // метод .remove() удаляет элемент напрямую, не требуя ссылки на родителя
-
-            // Обновляем итоговые значения
-            var totalVolumeElement = document.getElementById('totalVolume');
-            var totalCostElement = document.getElementById('totalCost');
-
-            var totalVolume = parseFloat(totalVolumeElement.textContent) - volumeToRemove;
-            var totalCost = parseFloat(totalCostElement.textContent) - costToRemove;
-
-            totalVolumeElement.textContent = totalVolume.toFixed(3);
-            totalCostElement.textContent = totalCost.toFixed(2);
+            deleteRowAndUpdateTotals(row); // Вызываем функцию для удаления строки и обновления итогов
         }
     }
 });
@@ -192,7 +197,7 @@ function addSelectedBars() {
     // Перебираем строки таблицы в модальном окне
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
-        var materialName = row.cells[1].textContent; // "Наименование"
+        var materialName = row.cells[0].textContent; // "Наименование"
         var quantity = row.cells[4].querySelector('input[type="number"]').value;
         var pricePerMeter = parseFloat(row.cells[3].textContent);
         var cost = pricePerMeter * quantity;
@@ -202,7 +207,7 @@ function addSelectedBars() {
             var newRow = document.getElementById('resultsTable').tBodies[0].insertRow();
             newRow.innerHTML = `
                 <td>${materialName}</td>
-                <td>${row.cells[2].textContent}</td>
+                <td>${row.cells[1].textContent}</td>
                 <td></td>
                 <td>${quantity}</td>
                 <td></td>
@@ -249,7 +254,7 @@ function toggleButtonLoading(button) {
     // Возвращаем исходный текст кнопки через 2 секунды
     setTimeout(() => {
         button.innerHTML = originalText;
-    }, 2000);
+    }, 1000);
 }
 
 // Назначаем обработчик событий на кнопку
