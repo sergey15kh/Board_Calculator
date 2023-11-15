@@ -161,9 +161,6 @@ button:active {
 #barsModal .modal-content table {
   cursor: auto;
 }
-#barsModal .modal-content table td {
-  padding: 0 0.75rem;
-}
 
 .mt-1 {
   margin-top: 1rem;

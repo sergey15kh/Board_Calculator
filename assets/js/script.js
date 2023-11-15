@@ -25,6 +25,52 @@ const antisepticPrices = {
     'OgneBio': 2000
 };
 
+// Предположим, что у вас есть массив объектов с данными для брусков
+var barsData = [
+    {
+        name: "Сырой пилорамный",
+        thickness: 30,
+        width: 50,
+        unit: "м/п",
+        price: 14.10
+    },
+    {
+        name: "Сырой калиброваный",
+        thickness: 30,
+        width: 50,
+        unit: "м/п",
+        price: 18.50
+    },
+    {
+        name: "Сухой калиброваный",
+        thickness: 30,
+        width: 50,
+        unit: "м/п",
+        price: 21.50
+    },
+    {
+        name: "Сырой пилорамный",
+        thickness: 50,
+        width: 50,
+        unit: "м/п",
+        price: 23.50
+    },
+    {
+        name: "Сырой калиброваный",
+        thickness: 50,
+        width: 50,
+        unit: "м/п",
+        price: 30.80
+    },
+    {
+        name: "Сухой калиброваный",
+        thickness: 50,
+        width: 50,
+        unit: "м/п",
+        price: 35.80
+    },
+];
+
 function calculate() {
     // Получаем значения из полей ввода
     var material = document.getElementById('material').value;
@@ -188,55 +234,81 @@ document.getElementById('resultsTable').addEventListener('click', function(event
 
 /* Functions добавление реека в таблицу
 --------------------------------------------- */
+// Функция для создания строк в модальном окне на основе данных из barsData
+// Функция для создания строк в модальном окне на основе данных из barsData
+function populateBarsModal() {
+    var barsTableBody = document.getElementById('barsModal').querySelector('tbody');
+    barsTableBody.innerHTML = ''; // Очистить текущие строки
+
+    barsData.forEach(function(bar) {
+        var row = barsTableBody.insertRow();
+        row.innerHTML = `
+            <td>${bar.name}</td>
+            <td>${bar.thickness}x${bar.width}</td>
+            <td>${bar.unit}</td>
+            <td>${bar.price.toFixed(2)}</td>
+            <td><input type="number" min="0"></td>
+            <td>
+                <select class="barAntiseptic js-example-basic-single" name="state">
+                        <option value="none">Нет</option>
+                        <option value="BIO">БИО</option>
+                        <option value="OgneBio">ОгнеБио</option>
+                </select>
+            </td>
+            <td><button class="addBars">Добавить</button></td>
+        `;
+        // Назначаем обработчик события для кнопки "Добавить" в этой строке
+        row.querySelector('.addBars').addEventListener('click', function() {
+            addBarToResults(bar, row);
+        });
+    });
+}
+
 // Функция добавления выбранных данных в основную таблицу
-function addSelectedBars() {
-    // Находим таблицу в модальном окне
-    var barsTable = document.getElementById('barsModal').querySelector('table');
-    var rows = barsTable.tBodies[0].rows;
+function addBarToResults(bar, row) {
+    var quantity = row.querySelector('input[type="number"]').value;
+    var pricePerMeter = bar.price;
+    var cost = pricePerMeter * quantity;
 
-    // Перебираем строки таблицы в модальном окне
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var materialName = row.cells[0].textContent; // "Наименование"
-        var quantity = row.cells[4].querySelector('input[type="number"]').value;
-        var pricePerMeter = parseFloat(row.cells[3].textContent);
-        var cost = pricePerMeter * quantity;
+    var antisepticSelect = row.querySelector('.barAntiseptic'); // Выбор антисептика
+    var antisepticType = antisepticSelect ? antisepticSelect.value : 'none'; // Тип антисептика или 'none', если select не найден
+    var antisepticPrice = antisepticPrices[antisepticType]; // Цена антисептической обработки
 
-        // Если чекбокс выбран и количество введено
-        if (quantity) {
-            var newRow = document.getElementById('resultsTable').tBodies[0].insertRow();
-            newRow.innerHTML = `
-                <td>${materialName}</td>
-                <td>${row.cells[1].textContent}</td>
-                <td></td>
-                <td>${quantity}</td>
-                <td></td>
-                <td>${pricePerMeter.toFixed(2)}</td>
-                <td></td>
-                <td></td>
-                <td>${cost.toFixed(2)}</td>
-                <td></td>
-            `;
+    var volume = (bar.thickness / 1000) * (bar.width / 1000) * (bar.unit === 'м/п' ? 1 : 0); // Объем одного бруса в куб.м., если единица измерения 'м/п'
+    var totalVolume = volume * quantity; // Общий объем бруса в куб.м.
+    var totalPrice = (bar.price * totalVolume) + (antisepticPrice * totalVolume); // Общая стоимость бруса и антисептика
 
-            // Добавляем ячейку с кнопкой удаления
-            var deleteCell = newRow.insertCell();
-            var deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Удалить';
-            deleteButton.addEventListener('click', function() {
-                this.closest('tr').remove();
-                updateTotals(); // Обновляем итоговые значения после удаления строки
-            });
-            deleteCell.appendChild(deleteButton);
-        }
+    if (quantity) {
+        var newRow = document.getElementById('resultsTable').tBodies[0].insertRow();
+        newRow.innerHTML = `
+            <td>${bar.name}</td>
+            <td>${bar.thickness}x${bar.width}</td>
+            <td>-</td>
+            <td>${quantity}</td>
+            <td>${(quantity * bar.thickness * bar.width / 1000000).toFixed(3)}</td>
+            <td>${pricePerMeter.toFixed(2)}</td>
+            <td>-</td>
+            <td>${(pricePerMeter / (bar.thickness / 1000) / (bar.width / 1000)).toFixed(2)}</td>
+            <td>${(pricePerMeter * quantity).toFixed(2)}</td>
+            <td>${(antisepticPrice * totalVolume).toFixed(2)}</td>
+        `;
+
+        var deleteCell = newRow.insertCell();
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
+        deleteButton.addEventListener('click', function() {
+            newRow.remove();
+            updateTotals();
+        });
+        deleteCell.appendChild(deleteButton);
     }
 
-    // Очищаем выбор чекбоксов и поля после добавления строк
-    document.querySelectorAll('#barsModal input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-    document.querySelectorAll('#barsModal input[type="number"]').forEach(input => input.value = '');
-
-    // Обновляем итоговые значения после добавления строки
+    row.querySelector('input[type="number"]').value = ''; // Очистить поле ввода после добавления
     updateTotals();
 }
+
+
+populateBarsModal();
 
 // Добавляем обработчик клика на кнопку "Добавить" в модальном окне
 var addBarsButtons = document.getElementById('barsModal').querySelectorAll('.addBars');
