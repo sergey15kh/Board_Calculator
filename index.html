@@ -8,10 +8,9 @@
 </head>
 <body>
 
-<div class="calculator">
+<div class="container">
     <div class="header">
         <h1>Калькулятор доски/бруса</h1>
-        <button id="export">Экспорт в Excel</button>
     </div>
     <table class="input-table">
         <tr>
@@ -64,9 +63,14 @@
         </tr>
     </table>
     <div class="buttons">
-        <button id="add">Добавить</button>
-        <button id="bars">Добавить рейку</button>
-        <button id="clear">Очистить</button>
+        <div class="left">
+            <button id="add">Добавить</button>
+            <button id="bars">Добавить рейку</button>
+            <button id="clear">Очистить</button>
+        </div>
+        <div class="right">
+            <button id="export">Экспорт в Excel</button>
+        </div>
     </div>
     <!-- Таблица для вывода результатов -->
     <table id="resultsTable">
@@ -110,7 +114,7 @@
 </div>
 
 <!-- Модальное окно -->
-<div id="barsModal" class="input-table">
+<div id="barsModal" class="modal input-table">
     <!-- Контент модального окна -->
     <div class="modal-content">
         <span class="close">&times;</span>
