@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-    entry: './js/script.js',
+    entry: './assets/js/script.js',
     output: {
         filename: 'global.js',
-        path: path.resolve(__dirname, './js/'),
+        path: path.resolve(__dirname, './assets/js/'),
     },
 };

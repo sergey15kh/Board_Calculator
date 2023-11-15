@@ -11,7 +11,7 @@ body {
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	width: auto;
-	max-width: 1200px;
+	max-width: 1300px;
 	margin: 0 auto;
 }
 
@@ -43,6 +43,19 @@ table th, table td {
 
 table th {
 	background-color: #e8e8e8;
+}
+
+input {
+	background-color: #fff;
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	color: #444;
+	line-height: 24px;
+	display: block;
+	padding-left: 8px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .buttons {

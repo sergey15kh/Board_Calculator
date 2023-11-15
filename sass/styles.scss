@@ -21,7 +21,7 @@ body {
   border: 1px solid $border-color;
   border-radius: 4px;
   width: auto;
-  max-width: 1200px; // Maximum width for the modal to ensure it's not too wide
+  max-width: 1300px; // Maximum width for the modal to ensure it's not too wide
   margin: 0 auto;
 }
 
@@ -55,6 +55,19 @@ table {
   th {
     background-color: $hover-background-color;
   }
+}
+
+input {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  color: #444;
+  line-height: 24px;
+  display: block;
+  padding-left: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .buttons {
