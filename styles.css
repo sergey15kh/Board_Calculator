@@ -179,6 +179,10 @@ button:active {
 	cursor: auto;
 }
 
+#resultsTable tfoot tr td:first-child {
+	text-align: left;
+}
+
 .mt-1 {
 	margin-top: 1rem;
 }

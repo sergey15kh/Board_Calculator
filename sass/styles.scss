@@ -195,6 +195,18 @@ button {
 }
 
 
+#resultsTable {
+  tfoot {
+    tr {
+      td {
+        &:first-child {
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
 // Minimalistic select styling
 //select {
 //  padding: 0.5rem;
