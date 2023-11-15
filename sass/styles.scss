@@ -25,6 +25,10 @@ body {
   margin: 0 auto;
 }
 
+.header-modal {
+
+}
+
 // Styles for minimalistic containers
 .minimalism-container {
   background-color: $background-color;
@@ -51,6 +55,9 @@ table {
     background-color: $background-color;
     border-bottom: 1px solid $border-color;
     text-align: center;
+    .buttons {
+      justify-content: center;
+    }
   }
 
   th {
@@ -71,6 +78,7 @@ input {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 0 auto;
 }
 
 .buttons {
@@ -97,13 +105,6 @@ button {
 
   &:active {
     transform: translateY(1px); // Less pronounced active state for subtlety
-  }
-}
-
-#barsModal {
-  .modal-content {
-    cursor: grab;
-    width: 100%;
   }
 }
 
@@ -170,10 +171,32 @@ button {
   background-color: transparent;
   width: 60%;
   .modal-content {
+    cursor: grab;
+    width: 100%;
     z-index: 9999;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .header-modal {
+      display: block;
+      h2 {
+        float: left;
+      }
+      span {
+        float: right;
+      }
+      .close {
+        margin: 18px 0 0 0!important;
+      }
+    }
+
+    table {
+      cursor: auto;
+      td {
+        padding: 0 0.75rem;
+      }
+    }
   }
 }
+
 
 // Minimalistic select styling
 //select {

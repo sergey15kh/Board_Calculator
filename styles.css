@@ -42,6 +42,10 @@ table th, table td {
 	text-align: center;
 }
 
+table th .buttons, table td .buttons {
+	justify-content: center;
+}
+
 table th {
 	background-color: #e8e8e8;
 }
@@ -57,6 +61,7 @@ input {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	margin: 0 auto;
 }
 
 .buttons {
@@ -83,11 +88,6 @@ button:hover {
 
 button:active {
 	transform: translateY(1px);
-}
-
-#barsModal .modal-content {
-	cursor: grab;
-	width: 100%;
 }
 
 .modal {
@@ -153,8 +153,34 @@ button:active {
 }
 
 #barsModal .modal-content {
+	cursor: grab;
+	width: 100%;
 	z-index: 9999;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#barsModal .modal-content .header-modal {
+	display: block;
+}
+
+#barsModal .modal-content .header-modal h2 {
+	float: left;
+}
+
+#barsModal .modal-content .header-modal span {
+	float: right;
+}
+
+#barsModal .modal-content .header-modal .close {
+	margin: 18px 0 0 0 !important;
+}
+
+#barsModal .modal-content table {
+	cursor: auto;
+}
+
+#barsModal .modal-content table td {
+	padding: 0 0.75rem;
 }
 
 .mt-1 {
