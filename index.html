@@ -14,110 +14,123 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>Калькулятор доски/бруса</h1>
-    </div>
-    <table class="input-table">
-        <tr>
-            <th>Материал</th>
-            <th>Толщина (мм)</th>
-            <th>Ширина (мм)</th>
-            <th>Длина (мм)</th>
-            <th>Кол-во шт.</th>
-            <th>Объем м/п</th>
-            <th>Объем (м³)</th>
-            <th>Антисептик</th>
-        </tr>
-        <tr>
-            <td>
-                <select id="material" class="js-example-basic-single" name="state">
-                    <option>Сырой</option>
-                    <option>Сухой</option>
-                </select>
-            </td>
-            <td>
-                <select id="thickness" class="js-example-basic-single" name="state">
-                    <option>27</option>
-                    <option>40</option>
-                    <option>50</option>
-                    <option>100</option>
-                    <option>150</option>
-                    <option>200</option>
-                </select>
-            </td>
-            <td>
-                <select id="width" class="js-example-basic-single" name="state">
-                    <option>100</option>
-                    <option>120</option>
-                    <option>150</option>
-                    <option>200</option>
-                </select>
-            </td>
-            <td>
-                <select id="length" class="js-example-basic-single" name="state">
-                    <option>3000</option>
-                    <option>4000</option>
-                    <option>4500</option>
-                    <option>6000</option>
-                    <option>7000</option>
-                    <option>8000</option>
-                </select>
-            </td>
-            <td><input type="number" id="quantity"></td>
-            <td><input type="number" id="volume_mp"></td>
-            <td><input type="number" id="volume_m3"></td>
-            <td>
-                <select id="antiseptic" class="js-example-basic-single" name="state">
-                    <option value="none">Нет</option>
-                    <option value="BIO">БИО</option>
-                    <option value="OgneBio">ОгнеБио</option>
-                </select>
-            </td>
-        </tr>
-    </table>
-    <div class="buttons">
-        <div class="left">
-            <button id="add">Добавить</button>
-            <button id="bars">Добавить рейку</button>
-            <button id="clear">Очистить</button>
+<div class="wrapper">
+    <header class="header">
+        <div class="container">
         </div>
-        <div class="right">
-            <button id="export">Экспорт в Excel</button>
-        </div>
-    </div>
-    <!-- Таблица для вывода результатов -->
-    <table id="resultsTable">
-        <thead>
-        <tr>
-            <th>Материал</th>
-            <th>Размер</th>
-            <th>Кол-во шт</th>
-            <th>Объем м\п</th>
-            <th>Объем м3</th>
-            <th>Цена мп</th>
-            <th>Цена шт</th>
-            <th>Цена м3</th>
-            <th>Стоимость</th>
-            <th>Антисептик</th>
-            <th>Действие</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Сюда будут добавляться строки с результатами -->
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="4">Итого:</td>
-            <td id="totalVolume">0</td>
-            <td colspan="3"></td>
-            <td id="totalCost">0</td>
-            <td colspan="2"></td>
-        </tr>
-        </tfoot>
-    </table>
-</div>
+    </header>
 
+    <main class="page">
+        <div class="container-page">
+            <div class="header-page">
+                <h1>Калькулятор доски/бруса</h1>
+            </div>
+            <table class="input-table">
+                <tr>
+                    <th>Материал</th>
+                    <th>Толщина (мм)</th>
+                    <th>Ширина (мм)</th>
+                    <th>Длина (мм)</th>
+                    <th>Кол-во шт.</th>
+                    <th>Объем м/п</th>
+                    <th>Объем (м³)</th>
+                    <th>Антисептик</th>
+                </tr>
+                <tr>
+                    <td>
+                        <select id="material" class="js-example-basic-single" name="state">
+                            <option>Сырой</option>
+                            <option>Сухой</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="thickness" class="js-example-basic-single" name="state">
+                            <option>27</option>
+                            <option>40</option>
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="width" class="js-example-basic-single" name="state">
+                            <option>100</option>
+                            <option>120</option>
+                            <option>150</option>
+                            <option>200</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="length" class="js-example-basic-single" name="state">
+                            <option>3000</option>
+                            <option>4000</option>
+                            <option>4500</option>
+                            <option>6000</option>
+                            <option>7000</option>
+                            <option>8000</option>
+                        </select>
+                    </td>
+                    <td><input type="number" id="quantity"></td>
+                    <td><input type="number" id="volume_mp"></td>
+                    <td><input type="number" id="volume_m3"></td>
+                    <td>
+                        <select id="antiseptic" class="js-example-basic-single" name="state">
+                            <option value="none">Нет</option>
+                            <option value="BIO">БИО</option>
+                            <option value="OgneBio">ОгнеБио</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <div class="left">
+                    <button id="add">Добавить</button>
+                    <button id="bars">Добавить рейку</button>
+                    <button id="clear">Очистить</button>
+                </div>
+                <div class="right">
+                    <button id="export">Экспорт в Excel</button>
+                </div>
+            </div>
+            <!-- Таблица для вывода результатов -->
+            <table id="resultsTable">
+                <thead>
+                <tr>
+                    <th>Материал</th>
+                    <th>Размер</th>
+                    <th>Кол-во шт</th>
+                    <th>Объем м\п</th>
+                    <th>Объем м3</th>
+                    <th>Цена мп</th>
+                    <th>Цена шт</th>
+                    <th>Цена м3</th>
+                    <th>Стоимость</th>
+                    <th>Антисептик</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Сюда будут добавляться строки с результатами -->
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">Итого:</td>
+                    <td id="totalVolume">0</td>
+                    <td colspan="3"></td>
+                    <td id="totalCost">0</td>
+                    <td colspan="2"></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+        </div>
+    </footer>
+</div>
 <!-- Модальное окно -->
 <div id="errorModal" class="modal">
     <!-- Контент модального окна -->

@@ -12,10 +12,37 @@ body {
   background: $background-color;
   color: $text-color;
   line-height: 1.6;
+  &._lock {
+    overflow: hidden;
+  }
+  &.active {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  &.loaded {
+  }
+}
+
+.page {
+  flex: 1 1 auto;
+}
+
+.container {
+  width: auto;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
 // Minimalistic container styling
-.container {
+.container-page {
   padding: 2rem;
   background-color: $background-color;
   border: 1px solid $border-color;

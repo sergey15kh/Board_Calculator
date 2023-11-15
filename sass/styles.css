@@ -4,8 +4,32 @@ body {
   color: #333;
   line-height: 1.6;
 }
+body._lock {
+  overflow: hidden;
+}
+body.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.page {
+  flex: 1 1 auto;
+}
 
 .container {
+  width: auto;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.container-page {
   padding: 2rem;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
