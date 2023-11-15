@@ -434,6 +434,204 @@ document.getElementById('export').addEventListener('click', function() {
     XLSX.writeFile(wb, "Results.xlsx");
 });
 
+/* addCustomSizeTable
+--------------------------------------------- */
+// Get the modal element for custom size
+var addCustomSizeModal = document.getElementById('addCustomSizeTable');
+
+// Get the button that opens the custom size modal
+var addCustomSizeButton = document.getElementById('addCustomSizeButton');
+
+// Get the <span> element that closes the modal
+var spanCloseCustomSize = addCustomSizeModal.querySelector('.close');
+
+// Event listener to open the custom size modal
+addCustomSizeButton.onclick = function() {
+    addCustomSizeModal.style.display = "block";
+    initDragAndDrop(addCustomSizeModal.querySelector('.modal-content'));
+}
+
+// Event listener to close the custom size modal
+spanCloseCustomSize.onclick = function() {
+    addCustomSizeModal.style.display = "none";
+}
+
+// Initialize drag and drop on modal content
+function initDragAndDrop(modalContent) {
+    var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    var xOffset = 0;
+    var yOffset = 0;
+
+    modalContent.addEventListener('mousedown', dragStart, false);
+
+    function dragStart(e) {
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+        if (e.target === modalContent) {
+            active = true;
+        }
+    }
+
+    document.addEventListener('mouseup', dragEnd, false);
+    document.addEventListener('mousemove', drag, false);
+
+    function dragEnd(e) {
+        initialX = currentX;
+        initialY = currentY;
+        active = false;
+    }
+
+    function drag(e) {
+        if (active) {
+            e.preventDefault();
+
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            setTranslate(currentX, currentY, modalContent);
+        }
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+    }
+}
+
+// Close the custom size modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target == addCustomSizeModal) {
+        addCustomSizeModal.style.display = "none";
+    }
+}
+
+////
+// Вспомогательная функция для получения цены за кубический метр на основе длины
+function calculateCustomSize() {
+    // Получаем значения из полей ввода
+    var materialCustom = document.getElementById('materialCustom').value;
+    var thicknessCustom = parseFloat(document.getElementById('thicknessCustom').value);
+    var widthCustom = parseFloat(document.getElementById('widthCustom').value);
+    var lengthCustom = parseFloat(document.getElementById('lengthCustom').value);
+    var quantityCustom = parseFloat(document.getElementById('quantityCustom').value);
+    var volumeMpCustom = parseFloat(document.getElementById('volume_mpCustom').value);
+    var volumeM3Custom = parseFloat(document.getElementById('volume_m3Custom').value);
+    var antisepticType = document.getElementById('antisepticCost').value;
+
+    // Проверяем, сколько полей заполнено
+    var inputCount = [quantityCustom, volumeMpCustom, volumeM3Custom].filter(value => !isNaN(value) && value > 0).length;
+
+    // Если заполнено более одного поля, показываем предупреждение
+    if (inputCount > 1) {
+        alert('Пожалуйста, заполните только одно поле: "Кол-во шт.", "Объем м/п" или "Объем (м³)".');
+        return; // Прерываем выполнение функции
+    }
+
+    // Расчетные переменные
+    var totalVolume;
+    var volumeMp;
+    var volumePerPiece;
+    var pricePerCubicMeter;
+
+    // Расчёт на основе введённого количества штук
+    if (!isNaN(quantityCustom) && quantityCustom > 0) {
+        volumePerPiece = (thicknessCustom / 1000) * (widthCustom / 1000) * (lengthCustom / 1000);
+        totalVolume = volumePerPiece * quantityCustom;
+        volumeMp = (lengthCustom / 1000) * quantityCustom;
+    }
+    // Расчёт на основе введённого объема м/п
+    else if (!isNaN(volumeMpCustom) && volumeMpCustom > 0) {
+        totalVolume = volumeMpCustom * (thicknessCustom / 1000) * (widthCustom / 1000);
+        quantityCustom = volumeMpCustom / (lengthCustom / 1000);
+        volumeMp = volumeMpCustom;
+    }
+    // Расчёт на основе введённого объема м³
+    else if (!isNaN(volumeM3Custom) && volumeM3Custom > 0) {
+        totalVolume = volumeM3Custom;
+        volumeMp = totalVolume / ((thicknessCustom / 1000) * (widthCustom / 1000));
+        quantityCustom = totalVolume / ((thicknessCustom / 1000) * (widthCustom / 1000) * (lengthCustom / 1000));
+    }
+
+    // Проверяем, был ли сделан хотя бы один расчёт
+    if (!totalVolume) {
+        alert('Введите количество штук, объем м/п или объем м³ для расчёта.');
+        return; // Прерываем функцию, если нечего расчитывать
+    }
+
+    // Определяем цену в зависимости от длины
+    pricePerCubicMeter = getPricePerCubicMeter(lengthCustom);
+
+    // Расчет цены за метр погонный и за штуку
+    var pricePerMeter = pricePerCubicMeter * (thicknessCustom / 1000) * (widthCustom / 1000);
+    var pricePerPiece = pricePerMeter * (lengthCustom / 1000);
+
+    // Определяем стоимость антисептика
+    var antisepticPrice = antisepticPrices[antisepticType];
+    var antisepticCost = totalVolume * antisepticPrice;
+
+    // Расчет общей стоимости с учетом антисептика
+    var totalPrice = totalVolume * pricePerCubicMeter + antisepticCost;
+
+    // Добавление строки в таблицу результатов
+    var resultsTableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+    var newRow = resultsTableBody.insertRow();
+    newRow.innerHTML = `
+        <td>${materialCustom}</td>
+        <td>${thicknessCustom}x${widthCustom}x${lengthCustom}</td>
+        <td>${quantityCustom.toFixed(2)}</td>
+        <td>${volumeMp.toFixed(3)}</td>
+        <td>${totalVolume.toFixed(3)}</td>
+        <td>${pricePerMeter.toFixed(2)}</td>
+        <td>${pricePerPiece.toFixed(2)}</td>
+        <td>${pricePerCubicMeter.toFixed(2)}</td>
+        <td>${totalPrice.toFixed(2)}</td>
+        <td>${antisepticType !== 'none' ? antisepticCost.toFixed(2) : 'Нет'}</td>
+        <td><button onclick="deleteRow(this)"><i class="fa-solid fa-trash"></i></button></td>
+    `;
+
+    // Обновление итогов
+    updateTotals();
+
+    // Обнуление значений в полях ввода
+    document.getElementById('thicknessCustom').value = '';
+    document.getElementById('widthCustom').value = '';
+    document.getElementById('lengthCustom').value = '';
+    document.getElementById('quantityCustom').value = '';
+    document.getElementById('volume_mpCustom').value = '';
+    document.getElementById('volume_m3Custom').value = '';
+    // Сброс выбора в выпадающих списках на первый элемент
+    document.getElementById('materialCustom').selectedIndex = 0;
+    document.getElementById('antisepticCost').selectedIndex = 0;
+    // Обновление плагина select2 для отображения изменений
+    $('#materialCustom').select2().trigger('change');
+    $('#antisepticCost').select2().trigger('change');
+}
+
+// Функция для получения цены за кубический метр в зависимости от длины
+function getPricePerCubicMeter(length) {
+    var basePrice = 7900; // Базовая цена 3000/4000/4500/6000
+    var basePrice7000 = 13300; // Базовая цена 7000
+    var basePrice8000 = 14200; // Базовая цена 8000
+    if (length === 3000 || length === 4000 || length === 4500 || length === 6000) {
+        return basePrice;
+    } else if (length === 7000) {
+        return basePrice7000;
+    } else if (length === 8000) {
+        return basePrice8000;
+    } else {
+        // Увеличиваем базовую цену на 30%
+        return basePrice * 1.3; // 30% увеличение
+    }
+}
+
+// Обработчик клика для кнопки добавления пользовательского размера в таблицу
+document.getElementById('customSizeButton').addEventListener('click', calculateCustomSize);
 
 /* POPUP с ошибками
 --------------------------------------------- */

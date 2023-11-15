@@ -151,11 +151,19 @@ button:active {
     opacity: 1;
   }
 }
+#errorModal {
+  z-index: 9999;
+}
 #errorModal .modal-content {
   border-color: #d9534f;
 }
 
-#barsModal {
+#addCustomSizeTable tbody td input {
+  width: 109px;
+}
+
+#barsModal,
+#addCustomSizeTable {
   display: none;
   position: fixed;
   top: 50%;
@@ -164,25 +172,31 @@ button:active {
   background-color: transparent;
   width: 60%;
 }
-#barsModal .modal-content {
+#barsModal .modal-content,
+#addCustomSizeTable .modal-content {
   cursor: grab;
   width: 100%;
-  z-index: 9999;
+  z-index: 9998;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-#barsModal .modal-content .header-modal {
+#barsModal .modal-content .header-modal,
+#addCustomSizeTable .modal-content .header-modal {
   display: block;
 }
-#barsModal .modal-content .header-modal h2 {
+#barsModal .modal-content .header-modal h2,
+#addCustomSizeTable .modal-content .header-modal h2 {
   float: left;
 }
-#barsModal .modal-content .header-modal span {
+#barsModal .modal-content .header-modal span,
+#addCustomSizeTable .modal-content .header-modal span {
   float: right;
 }
-#barsModal .modal-content .header-modal .close {
+#barsModal .modal-content .header-modal .close,
+#addCustomSizeTable .modal-content .header-modal .close {
   margin: 18px 0 0 0 !important;
 }
-#barsModal .modal-content table {
+#barsModal .modal-content table,
+#addCustomSizeTable .modal-content table {
   cursor: auto;
 }
 

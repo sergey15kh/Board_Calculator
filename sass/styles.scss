@@ -183,13 +183,27 @@ button {
 
 // Styles for error messages in a minimalistic approach
 #errorModal {
+  z-index: 9999;
   .modal-content {
     border-color: $error-color;
   }
 }
 
+#addCustomSizeTable {
+  tbody {
+    td {
+      input {
+        width: 109px;
+      }
+    }
+  }
+}
+
+
+
 // Minimalistic styles for the barsModal container
-#barsModal {
+#barsModal,
+#addCustomSizeTable {
   display: none; // Container is hidden by default
   position: fixed;
   top: 50%;
@@ -200,7 +214,7 @@ button {
   .modal-content {
     cursor: grab;
     width: 100%;
-    z-index: 9999;
+    z-index: 9998;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     .header-modal {
       display: block;

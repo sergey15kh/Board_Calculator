@@ -86,6 +86,7 @@
             <div class="buttons">
                 <div class="left">
                     <button id="add">Добавить</button>
+                    <button id="addCustomSizeButton">Другие размеры</button>
                     <button id="bars">Добавить рейку</button>
                     <button id="clear">Очистить</button>
                 </div>
@@ -136,7 +137,7 @@
     <!-- Контент модального окна -->
     <div class="modal-content">
         <span class="close"><i class="fa-solid fa-xmark"></i></span>
-        <p id="modalText">Некоторый текст в модальном окне...</p>
+        <p id="modalText"></p>
     </div>
 </div>
 
@@ -145,7 +146,7 @@
     <!-- Контент модального окна -->
     <div class="modal-content">
         <div class="header-modal">
-            <h2>Калькулятор доски/бруса</h2>
+            <h2>Брус/рейка монтажная</h2>
             <span class="close"><i class="fa-solid fa-xmark"></i></span>
         </div>
         <table>
@@ -169,6 +170,59 @@
             </tr>
             </tfoot>
         </table>
+    </div>
+</div>
+
+<!-- Модальное окно -->
+<div id="addCustomSizeTable" class="modal input-table">
+    <!-- Контент модального окна -->
+    <div class="modal-content">
+        <div class="header-modal">
+            <h2>Брус/доска кастомные размеры</h2>
+            <span class="close"><i class="fa-solid fa-xmark"></i></span>
+        </div>
+        <table class="input-table">
+            <tr>
+                <th>Материал</th>
+                <th>Толщина (мм)</th>
+                <th>Ширина (мм)</th>
+                <th>Длина (мм)</th>
+                <th>Кол-во шт.</th>
+                <th>Объем м/п</th>
+                <th>Объем (м³)</th>
+                <th>Антисептик</th>
+            </tr>
+            <tr>
+                <td>
+                    <select id="materialCustom" class="js-example-basic-single" name="state">
+                        <option>Сырой</option>
+                        <option>Сухой</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="thicknessCustom" type="number">
+                </td>
+                <td>
+                    <input id="widthCustom" type="number">
+                </td>
+                <td>
+                    <input id="lengthCustom" type="number">
+                </td>
+                <td><input type="number" id="quantityCustom"></td>
+                <td><input type="number" id="volume_mpCustom"></td>
+                <td><input type="number" id="volume_m3Custom"></td>
+                <td>
+                    <select id="antisepticCost" class="js-example-basic-single" name="state">
+                        <option value="none">Нет</option>
+                        <option value="BIO">БИО</option>
+                        <option value="OgneBio">ОгнеБио</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <button id="customSizeButton">Добавить в таблицу</button>
+        </div>
     </div>
 </div>
 
