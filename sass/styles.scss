@@ -50,6 +50,7 @@ table {
     padding: 0.75rem;
     background-color: $background-color;
     border-bottom: 1px solid $border-color;
+    text-align: center;
   }
 
   th {
@@ -58,6 +59,8 @@ table {
 }
 
 input {
+  //width: 50%;
+  //margin: 0 auto;
   background-color: #fff;
   border: 1px solid #aaa;
   border-radius: 4px;

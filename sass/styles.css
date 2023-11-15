@@ -37,6 +37,7 @@ table th, table td {
   padding: 0.75rem;
   background-color: #f0f0f0;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 table th {
   background-color: #e8e8e8;

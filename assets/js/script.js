@@ -115,7 +115,7 @@ function calculate() {
     // Добавляем кнопку удаления
     var deleteCell = newRow.insertCell();
     var deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Удалить';
+    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
     deleteButton.addEventListener('click', function() {
         resultsTableBody.deleteRow(newRow.rowIndex - 1);
     });
