@@ -25,7 +25,7 @@ const antisepticPrices = {
     'OgneBio': 2000
 };
 
-// Предположим, что у вас есть массив объектов с данными для брусков
+// Массив объектов с данными для брусков
 var barsData = [
     {
         name: "Сырой пилорамный",
@@ -155,7 +155,7 @@ function calculate() {
     <td>${pricePerPiece.toFixed(2)}</td>
     <td>${pricePerCubicMeter.toFixed(2)}</td>
     <td>${totalPrice.toFixed(2)}</td>
-    <td>${antisepticType !== 'none' ? antisepticType : 'Нет'}</td>
+    <td>${antisepticCost > 0 ? antisepticCost.toFixed(2) : 'Нет'}</td>
     `;
 
     // Добавляем кнопку удаления
