@@ -668,4 +668,3 @@ span.onclick = function() {
 //         barsModal.style.display = "none";
 //     }
 // }
-
